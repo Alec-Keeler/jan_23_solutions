@@ -1,7 +1,7 @@
 {
-  "name": "express-route-order",
+  "name": "intro-to-express",
   "version": "1.0.0",
-  "description": "Debug and correct route order in an Express application",
+  "description": "Initializes an Express application to listen for requests on a port. Returns a simple text response.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
