@@ -1,6 +1,11 @@
 const express = require('express');
 const app = express();
 
+app.use((req, res, next) => {
+  console.log(req.path)
+  next()
+})
+
 // First
 app.use('/', (req, res, next) => {
   console.log('First');
@@ -36,6 +41,10 @@ const fifth = (err, req, res, next) => {
 };
 
 app.use('/', [fourth, fifth]);
+// app.use('/', (err, req, res, next) => {
+//   console.log('Fifth');
+//   next();
+// })
 
 // Sixth
 app.get('/other-resource', (req, res, next) => {
@@ -44,7 +53,7 @@ app.get('/other-resource', (req, res, next) => {
 });
 
 // Seventh
-app.use((req, res, next) => {
+app.use((req, res) => {
   console.log('Seventh');
   res.send('Message');
 });
