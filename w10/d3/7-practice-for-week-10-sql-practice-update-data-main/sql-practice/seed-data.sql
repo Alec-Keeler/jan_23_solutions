@@ -15,3 +15,8 @@ VALUES
   ('River', 'Song');
 
 SELECT * FROM friends;
+
+UPDATE friends
+SET last_name = 'Blue'
+WHERE last_name = 'Tyler'
+  AND first_name = 'Sky';
