@@ -43,3 +43,17 @@ VALUES
   (5, 'Crinkle Ball'),
   (7, 'Cheetos'),
   (8, 'Yarn');
+
+  SELECT COUNT(*)
+  FROM cats;
+
+  SELECT MAX(birth_year), MIN(birth_year)
+  FROM cats;
+
+  SELECT *, MAX(birth_year)
+  FROM cats;
+
+  SELECT cat_id, COUNT(*)
+  FROM toys
+  GROUP BY cat_id
+  HAVING COUNT(*) >= 2;
