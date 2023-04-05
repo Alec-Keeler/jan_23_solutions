@@ -50,14 +50,29 @@ app.get('/puppies/name/:name', async (req, res, next) => {
     res.json(puppyByName);
 })
 
+// STEP 4
+// One puppy matching an id param
+// Finding one record by primary key
+app.get('/puppies/:id(\\d+)', async (req, res, next) => {
+    let puppyById;
+    
+    // Your code here
+    puppyById = await Puppy.findByPk(req.params.id)
+    res.json(puppyById);
+});
 
 // BONUS STEP 5
 // All puppies with breed ending in 'Shepherd'
 // WHERE clause with a comparison
 app.get('/puppies/shepherds', async (req, res, next) => {
     let shepherds;
-    
+    // console.log('test')
     // Your code here
+    shepherds = await Puppy.findAll({
+        where: {
+            breed: { [Op.endsWith]: 'Shepherd' }
+        }
+    })
 
     res.json(shepherds);
 })
@@ -71,20 +86,22 @@ app.get('/puppies/tinybabies', async (req, res, next) => {
     
     // Your code here
 
+    tinyBabyPuppies = await Puppy.findAll({
+        where: {
+            age_yrs: {
+                [Op.lt]: 1
+            },
+            weight_lbs: {
+                [Op.lt]: 20
+            }
+        },
+        order: [['age_yrs'], ['weight_lbs']]
+    })
+
     res.json(tinyBabyPuppies);
 })
 
 
-// STEP 4
-// One puppy matching an id param
-// Finding one record by primary key
-app.get('/puppies/:id', async (req, res, next) => {
-    let puppyById;
-    
-    // Your code here
-    
-    res.json(puppyById);
-});
 
 
 // Root route - DO NOT MODIFY
