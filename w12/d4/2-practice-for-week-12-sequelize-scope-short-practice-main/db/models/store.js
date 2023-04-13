@@ -20,6 +20,22 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Store',
+    scopes: {
+      inStore() {
+        const {Instrument} = require('../models')
+        return {
+          include: {
+            model: Instrument,
+            attributes: {
+              exclude: ['createdAt', 'updatedAt']
+            },
+            order: [[Instrument, 'name']]
+          }
+        }
+      }
+      // order by instrument name
+      //include instruments
+    }
   });
   return Store;
 };

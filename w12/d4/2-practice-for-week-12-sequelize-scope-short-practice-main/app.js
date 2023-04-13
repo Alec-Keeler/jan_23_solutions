@@ -23,34 +23,44 @@ app.get('/instruments', async (req, res, next) => {
 
 // STEP 2: Implement named scopes to their respective routes
 app.get('/instruments/keyboard', async (req, res, next) => {
-    const keyboards = await Instrument.findAll()
+    const keyboards = await Instrument.scope(['defaultScope', 'keyboards']).findAll()
     res.json(keyboards);
 });
 
 
 app.get('/instruments/string', async (req, res, next) => {
-    const strings = await Instrument.findAll()
+    const strings = await Instrument.scope(['defaultScope', 'strings']).findAll()
     res.json(strings);
 });
 
 app.get('/instruments/woodwind', async (req, res, next) => {
-    const woodWinds = await Instrument.findAll()
+    const woodWinds = await Instrument.scope(['defaultScope', 'woodwinds']).findAll()
     res.json(woodWinds);
 });
 
 // STEP 3 CHALLENGE: Implement the named function scopes to their dynamic routes
 // and returning the list in order by their names alphabetically
 app.get('/stores/:storeId/instruments', async (req, res, next) => {
-    const filterStoreInstruments = await Instrument.findAll()
+    // const filterStoreInstruments = await Instrument.scope([{method: ['atStore', req.params.storeId]}]).findAll()
+    const store = await Store.scope([{method: ['inStore']}]).findByPk(req.params.storeId)
     // Your code here
-    res.json(filterStoreInstruments);
+    res.json(store);
 });
 
 app.get('/stores/:storeId/instruments/:type', async (req, res, next) => {
-    const filteredInstruments = await Instrument.findAll()
+    // const filteredInstruments = await Instrument.findAll()
+
     // Your code here
     res.json(filteredInstruments);
 });
+
+// res: {
+    // store info
+    // Instruments: [
+//         instruments
+//     ]
+// }
+
 
 // List of all the stores in the database - DO NOT MODIFY
 app.get('/stores', async (req, res, next) => {
@@ -65,6 +75,7 @@ app.get('/', (req, res) => {
         message: "API server is running"
     });
 });
+
 
 // Set port and listen for incoming requests - DO NOT MODIFY
 if (require.main === module) {
